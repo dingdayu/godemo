@@ -1,0 +1,31 @@
+app:
+  name: demo
+  model: debug # debug / test / release by gin
+  port: 8000
+
+db:
+  master:
+    mysql: username:passwordt@tcp(127.0.0.1:3306)/mysql?charset=utf8mb4&parseTime=True&loc=Local
+    conn_max_lifetime: 2000
+    max_open_conns: 100
+    max_idle_conns: 5
+    log_model: true
+
+redis:
+  addr: 127.0.0.1:63778
+  password: password
+  db: 14
+  pool: 5
+
+log:
+  log_path: ./logs/
+  log_file_name: demo
+  log_level: debug
+  max_size: 1024
+  max_backups: 3
+  max_age: 7
+  request_log: true
+
+pprof:
+  open: false
+  addr: :8001
