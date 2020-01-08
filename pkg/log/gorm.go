@@ -1,13 +1,12 @@
 package log
 
 import (
+	"database/sql/driver"
 	"fmt"
 	"reflect"
 	"regexp"
 	"time"
 	"unicode"
-
-	"database/sql/driver"
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"

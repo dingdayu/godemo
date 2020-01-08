@@ -2,7 +2,6 @@ package log
 
 import (
 	"context"
-	"demo/internal/consts"
 	"os"
 	"sync"
 	"time"
@@ -11,13 +10,15 @@ import (
 	"demo/pkg/jaeger"
 
 	"github.com/fsnotify/fsnotify"
-	"github.com/spf13/viper"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-const TraceID = "trace_id"
+const (
+	TraceID        = "trace_id"
+	DateTimeFormat = "2006-01-02 15:04:05"
+)
 
 var once sync.Once
 
@@ -48,11 +49,11 @@ var level = zap.NewAtomicLevel()
 func Init() {
 	once.Do(func() {
 		handle := lumberjack.Logger{
-			Filename:   getLogfilePath(),                // 日志文件路径
-			MaxSize:    viper.GetInt("log.max_size"),    // 每个日志文件保存的最大尺寸 单位：M
-			MaxBackups: viper.GetInt("log.max_backups"), // 日志文件最多保存多少个备份
-			MaxAge:     viper.GetInt("log.max_age"),     // 文件最多保存多少天
-			Compress:   true,                            // 是否压缩
+			Filename:   getLogfilePath(),                 // 日志文件路径
+			MaxSize:    config.GetInt("log.max_size"),    // 每个日志文件保存的最大尺寸 单位：M
+			MaxBackups: config.GetInt("log.max_backups"), // 日志文件最多保存多少个备份
+			MaxAge:     config.GetInt("log.max_age"),     // 文件最多保存多少天
+			Compress:   true,                             // 是否压缩
 		}
 
 		encoderConfig := zapcore.EncoderConfig{
@@ -97,7 +98,7 @@ func (l *Logger) WithContext(c context.Context) *Logger {
 }
 
 func (l *Logger) Named(s string) *Logger {
-	l.Logger.Named(s)
+	l.Logger = l.Logger.Named(s)
 	return l
 }
 
@@ -127,5 +128,5 @@ func getLogfilePath() string {
 
 // timeEncoder 日志时间格式化
 func timeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
-	enc.AppendString(t.Format(consts.DateTimeFormat))
+	enc.AppendString(t.Format(DateTimeFormat))
 }
