@@ -1,12 +1,11 @@
 package middleware
 
 import (
-	"demo/pkg/redis"
+	mgin "github.com/ulule/limiter/v3/drivers/middleware/gin"
+	sredis "github.com/ulule/limiter/v3/drivers/store/redis"
 
 	"github.com/gin-gonic/gin"
 	"github.com/ulule/limiter/v3"
-	mgin "github.com/ulule/limiter/v3/drivers/middleware/gin"
-	sredis "github.com/ulule/limiter/v3/drivers/store/redis"
 	"go.uber.org/zap"
 )
 
@@ -14,7 +13,7 @@ const LimiterLogNamed = "limiter"
 
 // 处理跨域请求,支持options访问
 // rate: 1-M,1-H,1-D| 次数,
-func Limiter(logger *zap.Logger, rate string) gin.HandlerFunc {
+func Limiter(logger *zap.Logger, client sredis.Client, rate string) gin.HandlerFunc {
 	// Define a limit rate to 4 requests per hour.
 	rateFormatted, err := limiter.NewRateFromFormatted(rate)
 	if err != nil {
@@ -22,7 +21,7 @@ func Limiter(logger *zap.Logger, rate string) gin.HandlerFunc {
 	}
 
 	// Create a store with the redis client.
-	store, err := sredis.NewStoreWithOptions(redis.Redis(), limiter.StoreOptions{
+	store, err := sredis.NewStoreWithOptions(client, limiter.StoreOptions{
 		Prefix:   "resource:limiter:",
 		MaxRetry: 3,
 	})

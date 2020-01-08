@@ -44,25 +44,20 @@ func RecoveryWithZap(logger *log.Logger, stack bool) gin.HandlerFunc {
 						zap.String("request", string(httpRequest)),
 					)
 					// If the connection is dead, we can't write a status to it.
-					c.Error(err.(error)) // nolint: errcheck
+					_ = c.Error(err.(error)) // nolint: errcheck
 					c.Abort()
 					return
 				}
 
-				if stack {
-					logger.Error("[Recovery from panic]",
-						zap.Time("time", time.Now()),
-						zap.Any("error", err),
-						zap.String("request", string(httpRequest)),
-						zap.String("stack", string(debug.Stack())),
-					)
-				} else {
-					logger.Error("[Recovery from panic]",
-						zap.Time("time", time.Now()),
-						zap.Any("error", err),
-						zap.String("request", string(httpRequest)),
-					)
+				var fs = []zap.Field{
+					zap.Time("time", time.Now()),
+					zap.Any("error", err),
+					zap.String("request", string(httpRequest)),
 				}
+				if stack {
+					fs = append(fs, zap.String("stack", string(debug.Stack())))
+				}
+				logger.Error("recovery panic from gin middleware", fs...)
 				c.AbortWithStatus(http.StatusInternalServerError)
 			}
 		}()
