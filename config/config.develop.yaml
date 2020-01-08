@@ -5,17 +5,18 @@ app:
 
 db:
   master:
-    mysql: username:passwordt@tcp(127.0.0.1:3306)/mysql?charset=utf8mb4&parseTime=True&loc=Local
+    mysql: ${DB_USERNAME}:${DB_PASSWORD}@tcp(${DB_HOST}:${DB_POST})/${DB_NAME}?charset=utf8mb4&parseTime=True&loc=Local
     conn_max_lifetime: 2000
     max_open_conns: 100
     max_idle_conns: 5
     log_model: true
 
 redis:
-  addr: 127.0.0.1:63778
-  password: password
-  db: 14
-  pool: 5
+  client:
+    addr: ${REDIS_HOST_PORT}
+    password: ${REDIS_PASSWORD}
+    db: ${REDIS_DB}
+    pool: 5
 
 log:
   log_path: ./logs/
