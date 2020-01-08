@@ -110,3 +110,7 @@ func GetStringMapStringSlice(key string) map[string][]string {
 // GetSizeInBytes returns the size of the value associated with the given key
 // in bytes.
 func GetSizeInBytes(key string) uint { return viper.GetSizeInBytes(key) }
+
+func Set(key string, value interface{}) {
+	viper.Set(key, value)
+}
