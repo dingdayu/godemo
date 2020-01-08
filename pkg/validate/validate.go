@@ -7,6 +7,8 @@ import (
 	"strings"
 	"sync"
 
+	"demo/pkg/validate/custom/carnumber"
+	"demo/pkg/validate/custom/idcard"
 	customtime "demo/pkg/validate/custom/time"
 
 	"github.com/gin-gonic/gin/binding"
@@ -67,7 +69,7 @@ func (e ErrValidators) Errors() string {
 
 func (e ErrValidators) Error() string {
 	if e.HasErrors() {
-		return fmt.Sprintf("%s:%s", e[0].Field, e[0].Message)
+		return fmt.Sprintf(e[0].Message)
 	}
 	return ""
 }
@@ -181,4 +183,10 @@ func customValidator() {
 
 	_ = validate.RegisterValidation("hour", customtime.ValidateTimeHM)
 	_ = validate.RegisterTranslation("hour", trans, customtime.ValidateTimeHMTranslator, translateFunc)
+
+	_ = validate.RegisterValidation("idCard", idcard.ValidateIdCardNo)
+	_ = validate.RegisterTranslation("idCard", trans, idcard.ValidateIdCardNoTranslator, translateFunc)
+
+	_ = validate.RegisterValidation("carNumber", carnumber.ValidateCarNumber)
+	_ = validate.RegisterTranslation("carNumber", trans, carnumber.ValidateCarNumberTranslator, translateFunc)
 }

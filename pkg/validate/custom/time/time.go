@@ -3,15 +3,17 @@ package customtime
 import (
 	"time"
 
-	"demo/internal/consts"
-
 	ut "github.com/go-playground/universal-translator"
 	"gopkg.in/go-playground/validator.v9"
 )
 
+const DateTimeFormat = "2006-01-02 15:04:05"
+const DateTimeHMFormat = "15:04"
+const DateFormat = "2006-01-02"
+
 // ValidateTime 验证是否是时间
 func ValidateTime(fl validator.FieldLevel) bool {
-	_, err := time.ParseInLocation(consts.DateTimeFormat, fl.Field().String(), time.Local)
+	_, err := time.ParseInLocation(DateTimeFormat, fl.Field().String(), time.Local)
 	if err != nil {
 		return false
 	}
@@ -25,7 +27,7 @@ func ValidateTimeTranslator(ut ut.Translator) (err error) {
 
 // ValidateTimeHM 验证是否是时间 eg. 13:09
 func ValidateTimeHM(fl validator.FieldLevel) bool {
-	_, err := time.ParseInLocation(consts.DateTimeHMFormat, fl.Field().String(), time.Local)
+	_, err := time.ParseInLocation(DateTimeHMFormat, fl.Field().String(), time.Local)
 	if err != nil {
 		return false
 	}
