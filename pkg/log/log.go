@@ -4,21 +4,18 @@ import (
 	"context"
 	"os"
 	"sync"
-	"time"
 
 	"demo/pkg/config"
 	"demo/pkg/jaeger"
 
 	"github.com/fsnotify/fsnotify"
+	"github.com/spf13/viper"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-const (
-	TraceID        = "trace_id"
-	DateTimeFormat = "2006-01-02 15:04:05"
-)
+const TraceID = "trace_id"
 
 var once sync.Once
 
@@ -48,14 +45,6 @@ var level = zap.NewAtomicLevel()
 // Setup init Logger
 func Init() {
 	once.Do(func() {
-		handle := lumberjack.Logger{
-			Filename:   getLogfilePath(),                 // 日志文件路径
-			MaxSize:    config.GetInt("log.max_size"),    // 每个日志文件保存的最大尺寸 单位：M
-			MaxBackups: config.GetInt("log.max_backups"), // 日志文件最多保存多少个备份
-			MaxAge:     config.GetInt("log.max_age"),     // 文件最多保存多少天
-			Compress:   true,                             // 是否压缩
-		}
-
 		encoderConfig := zapcore.EncoderConfig{
 			TimeKey:        "time",
 			LevelKey:       "level",
@@ -65,7 +54,7 @@ func Init() {
 			StacktraceKey:  "stack",
 			LineEnding:     zapcore.DefaultLineEnding,
 			EncodeLevel:    zapcore.LowercaseLevelEncoder,
-			EncodeTime:     timeEncoder,
+			EncodeTime:     zapcore.ISO8601TimeEncoder,
 			EncodeDuration: zapcore.SecondsDurationEncoder,
 			EncodeCaller:   zapcore.FullCallerEncoder,
 			EncodeName:     zapcore.FullNameEncoder,
@@ -74,7 +63,7 @@ func Init() {
 		SetLevel(config.GetString("log.log_level"))
 		core := zapcore.NewCore(
 			zapcore.NewJSONEncoder(encoderConfig),
-			zapcore.NewMultiWriteSyncer(zapcore.AddSync(os.Stdout), zapcore.AddSync(&handle)),
+			zapcore.NewMultiWriteSyncer(zapcore.NewMultiWriteSyncer(writers()...)),
 			level,
 		)
 		logger.Logger = zap.New(core, zap.AddCaller(), zap.Development()).
@@ -94,11 +83,6 @@ func (l *Logger) WithContext(c context.Context) *Logger {
 		id = ""
 	}
 	l.Logger = l.With(zap.String(TraceID, id))
-	return l
-}
-
-func (l *Logger) Named(s string) *Logger {
-	l.Logger = l.Logger.Named(s)
 	return l
 }
 
@@ -126,7 +110,20 @@ func getLogfilePath() string {
 	return config.GetString("log.log_path") + config.GetString("log.log_file_name") + ".log"
 }
 
-// timeEncoder 日志时间格式化
-func timeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
-	enc.AppendString(t.Format(DateTimeFormat))
+// writers 日志输出
+func writers() (ws []zapcore.WriteSyncer) {
+	handle := lumberjack.Logger{
+		Filename:   getLogfilePath(),                // 日志文件路径
+		MaxSize:    viper.GetInt("log.max_size"),    // 日志文件最多归档数量
+		MaxBackups: viper.GetInt("log.max_backups"), // 文件最多保存多少天
+		MaxAge:     viper.GetInt("log.max_age"),     // 是否压缩
+		Compress:   true,
+	}
+	ws = []zapcore.WriteSyncer{
+		zapcore.AddSync(&handle),
+	}
+	if viper.GetBool("log.stdout") {
+		ws = append(ws, zapcore.AddSync(os.Stdout))
+	}
+	return
 }

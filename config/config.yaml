@@ -26,6 +26,7 @@ log:
   max_backups: 3
   max_age: 7
   request_log: true
+  stdout: true
 
 pprof:
   open: false
