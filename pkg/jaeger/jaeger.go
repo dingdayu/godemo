@@ -4,11 +4,9 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"math/rand"
 	"net/http"
-	"strconv"
-	"time"
 
+	"github.com/gin-gonic/gin"
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
 	"github.com/uber/jaeger-client-go"
@@ -26,13 +24,13 @@ var (
 const SpanContextKey = "ParentSpanContext"
 const TraceID = "Tracer"
 
-// Init returns an instance of Jaeger Tracer
-func Init(serviceName string) {
+// Init returns an instance of Jaeger Tracer jaeger.SamplerTypeConst,1
+func Init(serviceName string, samplerType string, samplerParam float64) {
 	cfg := &config.Configuration{
 		ServiceName: serviceName,
 		Sampler: &config.SamplerConfig{
-			Type:  jaeger.SamplerTypeConst,
-			Param: 1,
+			Type:  samplerType,
+			Param: samplerParam,
 		},
 		Reporter: &config.ReporterConfig{
 			LogSpans: true,
@@ -51,6 +49,14 @@ func StartSpanFromHeader(header *http.Header, operationName string) (span opentr
 	spanCtx, _ := Tracer.Extract(opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(*header))
 	span, ctx = opentracing.StartSpanFromContext(context.Background(), operationName, ext.RPCServerOption(spanCtx))
 	return span, ctx
+}
+
+// InjectSpanToHeader is inject span to the http header.
+func InjectSpanToHeader(span opentracing.Span, header http.Header) {
+	err := Tracer.Inject(span.Context(), opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(header))
+	if err != nil {
+		fmt.Printf("ERROR: cannot inject headers: %s\n", err.Error())
+	}
 }
 
 // StartSpanFromContext is start span from the context.
@@ -80,10 +86,7 @@ func GetContextOfRootSpan(ctx context.Context) (c context.Context) {
 	return opentracing.ContextWithSpan(ctx, GetSpanFormContext(ctx))
 }
 
-// GenerateRequestID 生成请求 ID
-func GenerateRequestID() string {
-	unixnaono := time.Now().UnixNano()
-	randInt := rand.New(rand.NewSource(unixnaono)).Intn(9999)
-	requestid := strconv.FormatInt(unixnaono, 10) + strconv.Itoa(randInt)
-	return requestid
+// CopyContextOfRootSpan is copy root span context.
+func CopyContextOfRootSpan(ctx *gin.Context) (c context.Context) {
+	return GetContextOfRootSpan(ctx.Copy())
 }
