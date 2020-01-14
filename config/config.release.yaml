@@ -1,6 +1,6 @@
 app:
   name: demo
-  model: debug # debug / test / release by gin
+  model: release # debug / test / release by gin
   port: 8000
 
 db:

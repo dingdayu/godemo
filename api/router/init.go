@@ -18,18 +18,22 @@ func Handler() *gin.Engine {
 	handle = gin.New()
 	handle.ForwardedByClientIP = true
 
+	// 读取配置文件
+	if config.GetString("app.model") == "release" {
+		gin.SetMode(gin.ReleaseMode)
+	}
+
 	if gin.Mode() != gin.ReleaseMode {
 		// 非正式环境下开始开启 debug 模式
 		handle.GET("/debug/vars", expvar.Handler())
-	} else {
-		// 正式环境接收 Recover 日志
-		handle.Use(middleware.RecoveryWithZap(log.New().Named(middleware.RecoveryLogNamed), true))
 	}
 
+	// 开启 Recover
+	handle.Use(middleware.RecoveryWithZap(log.New().Named(middleware.RecoveryLogNamed), true))
 	// 开启 gzip
 	handle.Use(gzip.Gzip(gzip.DefaultCompression))
 
-	// 探活接口
+	// 探活与采集接口
 	handle.GET("/", health.Hello)
 	handle.HEAD("/health", health.Hello)
 	handle.GET("/health", health.Hello)
