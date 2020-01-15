@@ -27,14 +27,14 @@ var levelType = map[string]zapcore.Level{
 	"error": zap.ErrorLevel,
 }
 
-// zlog logger 标准日志
+// Logger 日志
 type Logger struct {
 	*zap.Logger
 }
 
 var logger = new(Logger)
 
-// Logger new Logger
+// Logger New Logger
 func New() *Logger {
 	return logger
 }
@@ -77,12 +77,17 @@ func Init() {
 }
 
 // WithContext 从上下文中获取 trace-id 并在日志中加入 trace-id 字段
-func (l *Logger) WithContext(c context.Context) *Logger {
+func (l Logger) WithContext(c context.Context) Logger {
 	id, ok := c.Value(jaeger.TraceID).(string)
-	if !ok {
-		id = ""
+	if ok {
+		l.Logger = l.With(zap.String(TraceID, id))
 	}
-	l.Logger = l.With(zap.String(TraceID, id))
+	return l
+}
+
+// Named 设置 named 字段
+func (l Logger) Named(name string) Logger {
+	l.Logger.Named(name)
 	return l
 }
 
