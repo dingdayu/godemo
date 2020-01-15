@@ -17,7 +17,10 @@ var ServerCmd = &cobra.Command{
 	},
 	PreRun: func(cmd *cobra.Command, args []string) {
 		// 初始化依赖扩展
-		jaeger.Init(config.GetString("app.name"))
+		jaeger.Init(
+			config.GetString("jaeger.service_name"),
+			config.GetString("jaeger.sampler_type"),
+			config.GetFloat64("jaeger.sampler_param"))
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 		// 启动入口

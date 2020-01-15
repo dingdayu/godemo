@@ -28,6 +28,11 @@ log:
   request_log: true
   stdout: false
 
+jaeger:
+  service_name: demo
+  sampler_type: const # ratelimiting,const
+  sampler_param: 0
+
 pprof:
   open: false
   addr: :8001

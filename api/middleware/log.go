@@ -17,7 +17,7 @@ import (
 const RequestLogNamed = "http_request"
 
 // 处理跨域请求,支持options访问
-func WriterLog(logger *log.Logger) gin.HandlerFunc {
+func WriterLog(logger *zap.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		start := time.Now()
 
