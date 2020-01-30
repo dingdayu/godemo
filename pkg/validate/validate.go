@@ -184,9 +184,9 @@ func customValidator() {
 	_ = validate.RegisterValidation("hour", customtime.ValidateTimeHM)
 	_ = validate.RegisterTranslation("hour", trans, customtime.ValidateTimeHMTranslator, translateFunc)
 
-	_ = validate.RegisterValidation("idCard", idcard.ValidateIdCardNo)
-	_ = validate.RegisterTranslation("idCard", trans, idcard.ValidateIdCardNoTranslator, translateFunc)
+	_ = validate.RegisterValidation("id_card", idcard.ValidateIdCardNo)
+	_ = validate.RegisterTranslation("id_card", trans, idcard.ValidateIdCardNoTranslator, translateFunc)
 
-	_ = validate.RegisterValidation("carNumber", carnumber.ValidateCarNumber)
-	_ = validate.RegisterTranslation("carNumber", trans, carnumber.ValidateCarNumberTranslator, translateFunc)
+	_ = validate.RegisterValidation("car_number", carnumber.ValidateCarNumber)
+	_ = validate.RegisterTranslation("car_number", trans, carnumber.ValidateCarNumberTranslator, translateFunc)
 }
