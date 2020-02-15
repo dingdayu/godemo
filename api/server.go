@@ -21,10 +21,8 @@ func Run() {
 	binding.Validator = validate.GinValidator()
 	gin.SetMode(config.GetString("app.model"))
 	srv := &http.Server{
-		Addr:    addr,
-		Handler: router.Handler(),
-		//ReadTimeout:    readTimeout,
-		//WriteTimeout:   writeTimeout,
+		Addr:           addr,
+		Handler:        router.Handler(),
 		MaxHeaderBytes: 1 << 20,
 	}
 	fmt.Printf("\033[1;30;42m[info]\033[0m start http server listening %s\n", addr)

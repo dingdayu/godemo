@@ -8,7 +8,6 @@ import (
 	"github.com/go-resty/resty/v2"
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
-	"go.uber.org/zap"
 
 	"demo/pkg/jaeger"
 	"demo/pkg/log"
@@ -20,7 +19,7 @@ type Client struct {
 	ctx    context.Context
 	Client *resty.Client
 	Header http.Header
-	logger *zap.Logger
+	logger *log.Logger
 }
 
 func NewClient(ctx context.Context) *Client {
@@ -31,6 +30,7 @@ func NewClient(ctx context.Context) *Client {
 	client.ctx = ctx
 	client.Client = resty.New()
 	client.logger = log.New().Named("HTTP.GET")
+	return client
 }
 
 func (c *Client) WithContext(ctx context.Context) *Client {

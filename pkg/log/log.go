@@ -86,9 +86,10 @@ func (l Logger) WithContext(c context.Context) Logger {
 }
 
 // Named 设置 named 字段
-func (l Logger) Named(name string) Logger {
-	l.Logger.Named(name)
-	return l
+func (l *Logger) Named(name string) *Logger {
+	log := *l
+	log.Logger.Named(name)
+	return &log
 }
 
 // SetLevel 设置日志级别

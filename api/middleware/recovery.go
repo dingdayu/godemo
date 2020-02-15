@@ -11,6 +11,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
+
+	"demo/pkg/log"
 )
 
 const RecoveryLogNamed = "http_recovery"
@@ -20,7 +22,7 @@ const RecoveryLogNamed = "http_recovery"
 // All errors are logged using zap.Error().
 // stack means whether output the stack info.
 // The stack info is easy to find where the error occurs but the stack info is too large.
-func RecoveryWithZap(logger *zap.Logger, stack bool) gin.HandlerFunc {
+func RecoveryWithZap(logger *log.Logger, stack bool) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		defer func() {
 			if err := recover(); err != nil {
