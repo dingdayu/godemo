@@ -3,6 +3,7 @@ module demo
 go 1.13
 
 require (
+	github.com/alicebob/miniredis/v2 v2.11.4
 	github.com/codahale/hdrhistogram v0.0.0-20161010025455-3a0bb77429bd // indirect
 	github.com/fsnotify/fsnotify v1.4.7
 	github.com/gin-contrib/expvar v0.0.1
