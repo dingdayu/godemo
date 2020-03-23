@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"demo/internal/consts"
+	"demo/pkg/enum"
 	"demo/pkg/jaeger"
 
 	"github.com/gin-gonic/gin"
@@ -24,7 +24,7 @@ func Version(c *gin.Context) {
 	defer span.Finish()
 
 	if len(BuildTime) == 0 {
-		BuildTime = time.Now().Format(consts.DateTimeFormat)
+		BuildTime = time.Now().Format(enum.DateTimeFormat)
 		BuildVersion = time.Now().Format("20060102150405")
 	}
 
