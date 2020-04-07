@@ -19,7 +19,10 @@ func Ping(c *gin.Context) {
 
 // Prometheus 监控访问点
 func Prometheus(c *gin.Context) {
-	promhttp.Handler().ServeHTTP(c.Writer, c.Request)
+	// register promhttp.HandlerOpts DisableCompression
+	promhttp.InstrumentMetricHandler(prometheus.DefaultRegisterer, promhttp.HandlerFor(prometheus.DefaultGatherer, promhttp.HandlerOpts{
+		DisableCompression: true,
+	})).ServeHTTP(c.Writer, c.Request)
 }
 
 func init() {
