@@ -1,3 +1,11 @@
+# github.com/BurntSushi/toml v0.3.1
+github.com/BurntSushi/toml
+# github.com/alicebob/gopher-json v0.0.0-20180125190556-5a6b3ba71ee6
+github.com/alicebob/gopher-json
+# github.com/alicebob/miniredis/v2 v2.11.4
+github.com/alicebob/miniredis/v2
+github.com/alicebob/miniredis/v2/geohash
+github.com/alicebob/miniredis/v2/server
 # github.com/beorn7/perks v1.0.0
 github.com/beorn7/perks/quantile
 # github.com/fsnotify/fsnotify v1.4.7
@@ -6,11 +14,12 @@ github.com/fsnotify/fsnotify
 github.com/gin-contrib/expvar
 # github.com/gin-contrib/gzip v0.0.1
 github.com/gin-contrib/gzip
-# github.com/gin-contrib/sse v0.0.0-20190301062529-5545eab6dad3
+# github.com/gin-contrib/sse v0.1.0
 github.com/gin-contrib/sse
-# github.com/gin-gonic/gin v1.4.0
+# github.com/gin-gonic/gin v1.7.0
 github.com/gin-gonic/gin
 github.com/gin-gonic/gin/binding
+github.com/gin-gonic/gin/internal/bytesconv
 github.com/gin-gonic/gin/internal/json
 github.com/gin-gonic/gin/render
 # github.com/go-playground/locales v0.13.0
@@ -19,6 +28,8 @@ github.com/go-playground/locales/currency
 github.com/go-playground/locales/zh
 # github.com/go-playground/universal-translator v0.17.0
 github.com/go-playground/universal-translator
+# github.com/go-playground/validator/v10 v10.4.1
+github.com/go-playground/validator/v10
 # github.com/go-redis/redis v6.15.5+incompatible
 github.com/go-redis/redis
 github.com/go-redis/redis/internal
@@ -31,7 +42,7 @@ github.com/go-redis/redis/internal/util
 github.com/go-resty/resty/v2
 # github.com/go-sql-driver/mysql v1.4.1
 github.com/go-sql-driver/mysql
-# github.com/golang/protobuf v1.3.2
+# github.com/golang/protobuf v1.3.3
 github.com/golang/protobuf/proto
 # github.com/hashicorp/hcl v1.0.0
 github.com/hashicorp/hcl
@@ -51,13 +62,16 @@ github.com/jinzhu/gorm
 github.com/jinzhu/gorm/dialects/mysql
 # github.com/jinzhu/inflection v1.0.0
 github.com/jinzhu/inflection
-# github.com/json-iterator/go v1.1.8
+# github.com/joho/godotenv v1.3.0
+github.com/joho/godotenv
+github.com/joho/godotenv/autoload
+# github.com/json-iterator/go v1.1.9
 github.com/json-iterator/go
 # github.com/leodido/go-urn v1.2.0
 github.com/leodido/go-urn
 # github.com/magiconair/properties v1.8.1
 github.com/magiconair/properties
-# github.com/mattn/go-isatty v0.0.8
+# github.com/mattn/go-isatty v0.0.12
 github.com/mattn/go-isatty
 # github.com/matttproud/golang_protobuf_extensions v1.0.1
 github.com/matttproud/golang_protobuf_extensions/pbutil
@@ -67,8 +81,6 @@ github.com/mitchellh/mapstructure
 github.com/modern-go/concurrent
 # github.com/modern-go/reflect2 v1.0.1
 github.com/modern-go/reflect2
-# github.com/opentracing-contrib/go-stdlib v0.0.0-20190519235532-cf7a6c988dc9
-github.com/opentracing-contrib/go-stdlib/nethttp
 # github.com/opentracing/opentracing-go v1.1.0
 github.com/opentracing/opentracing-go
 github.com/opentracing/opentracing-go/ext
@@ -134,8 +146,18 @@ github.com/ulule/limiter/v3
 github.com/ulule/limiter/v3/drivers/middleware/gin
 github.com/ulule/limiter/v3/drivers/store/common
 github.com/ulule/limiter/v3/drivers/store/redis
+# github.com/yuin/gopher-lua v0.0.0-20191220021717-ab39c6098bdb
+github.com/yuin/gopher-lua
+github.com/yuin/gopher-lua/ast
+github.com/yuin/gopher-lua/parse
+github.com/yuin/gopher-lua/pm
 # go.uber.org/atomic v1.5.0
 go.uber.org/atomic
+# go.uber.org/automaxprocs v1.3.0
+go.uber.org/automaxprocs
+go.uber.org/automaxprocs/internal/cgroups
+go.uber.org/automaxprocs/internal/runtime
+go.uber.org/automaxprocs/maxprocs
 # go.uber.org/multierr v1.1.0
 go.uber.org/multierr
 # go.uber.org/zap v1.10.0
@@ -145,28 +167,67 @@ go.uber.org/zap/internal/bufferpool
 go.uber.org/zap/internal/color
 go.uber.org/zap/internal/exit
 go.uber.org/zap/zapcore
-# golang.org/x/lint v0.0.0-20190930215403-16217165b5de
+# golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
+golang.org/x/crypto/sha3
+# golang.org/x/lint v0.0.0-20191125180803-fdd1cda4f05f
 golang.org/x/lint
 golang.org/x/lint/golint
 # golang.org/x/net v0.0.0-20190724013045-ca1201d0de80
 golang.org/x/net/publicsuffix
-# golang.org/x/sys v0.0.0-20191113165036-4c7a9d0fe056
+# golang.org/x/sys v0.0.0-20200116001909-b77594299b42
+golang.org/x/sys/cpu
 golang.org/x/sys/unix
 # golang.org/x/text v0.3.2
 golang.org/x/text/transform
 golang.org/x/text/unicode/norm
-# golang.org/x/tools v0.0.0-20191113232020-e2727e816f5a
+# golang.org/x/tools v0.0.0-20191125144606-a911d9008d1f
+golang.org/x/tools/go/analysis
+golang.org/x/tools/go/analysis/passes/inspect
 golang.org/x/tools/go/ast/astutil
+golang.org/x/tools/go/ast/inspector
+golang.org/x/tools/go/buildutil
 golang.org/x/tools/go/gcexportdata
 golang.org/x/tools/go/internal/gcimporter
+golang.org/x/tools/go/internal/packagesdriver
+golang.org/x/tools/go/packages
+golang.org/x/tools/go/types/objectpath
+golang.org/x/tools/go/types/typeutil
+golang.org/x/tools/internal/fastwalk
+golang.org/x/tools/internal/gopathwalk
+golang.org/x/tools/internal/semver
+golang.org/x/tools/internal/span
 # google.golang.org/appengine v1.4.0
 google.golang.org/appengine/cloudsql
-# gopkg.in/go-playground/validator.v8 v8.18.2
-gopkg.in/go-playground/validator.v8
 # gopkg.in/go-playground/validator.v9 v9.30.0
 gopkg.in/go-playground/validator.v9
 gopkg.in/go-playground/validator.v9/translations/zh
 # gopkg.in/natefinch/lumberjack.v2 v2.0.0
 gopkg.in/natefinch/lumberjack.v2
-# gopkg.in/yaml.v2 v2.2.5
+# gopkg.in/yaml.v2 v2.2.8
 gopkg.in/yaml.v2
+# honnef.co/go/tools v0.0.1-2019.2.3
+honnef.co/go/tools/arg
+honnef.co/go/tools/cmd/staticcheck
+honnef.co/go/tools/config
+honnef.co/go/tools/deprecated
+honnef.co/go/tools/facts
+honnef.co/go/tools/functions
+honnef.co/go/tools/go/types/typeutil
+honnef.co/go/tools/internal/cache
+honnef.co/go/tools/internal/passes/buildssa
+honnef.co/go/tools/internal/renameio
+honnef.co/go/tools/internal/sharedcheck
+honnef.co/go/tools/lint
+honnef.co/go/tools/lint/lintdsl
+honnef.co/go/tools/lint/lintutil
+honnef.co/go/tools/lint/lintutil/format
+honnef.co/go/tools/loader
+honnef.co/go/tools/printf
+honnef.co/go/tools/simple
+honnef.co/go/tools/ssa
+honnef.co/go/tools/ssautil
+honnef.co/go/tools/staticcheck
+honnef.co/go/tools/staticcheck/vrp
+honnef.co/go/tools/stylecheck
+honnef.co/go/tools/unused
+honnef.co/go/tools/version
