@@ -8,14 +8,14 @@ require (
 	github.com/fsnotify/fsnotify v1.4.7
 	github.com/gin-contrib/expvar v0.0.1
 	github.com/gin-contrib/gzip v0.0.1
-	github.com/gin-gonic/gin v1.7.7
-	github.com/go-playground/locales v0.13.0
-	github.com/go-playground/universal-translator v0.17.0
+	github.com/gin-gonic/gin v1.9.1
+	github.com/go-playground/locales v0.14.1
+	github.com/go-playground/universal-translator v0.18.1
 	github.com/go-redis/redis v6.15.5+incompatible
 	github.com/go-resty/resty/v2 v2.1.0
 	github.com/jinzhu/gorm v1.9.12
 	github.com/joho/godotenv v1.3.0
-	github.com/json-iterator/go v1.1.11
+	github.com/json-iterator/go v1.1.12
 	github.com/opentracing/opentracing-go v1.1.0
 	github.com/pelletier/go-toml v1.6.0 // indirect
 	github.com/prometheus/client_golang v1.11.1
